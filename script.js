@@ -161,34 +161,24 @@ function renderCard() {
 }
 
 
-startBtn.addEventListener(
-  "click",
-  () => {
+startBtn.addEventListener("click", async () => {
 
-    /*
-      O celular normalmente bloqueia
-      música automática.
+  current = 0;
 
-      Como este botão é clicado pela pessoa,
-      o navegador permite iniciar a música.
-    */
+  showScreen(cardsScreen);
 
-    music.volume = 0.5;
+  renderCard();
 
-    music.play().catch(() => {
-      console.log(
-        "O navegador bloqueou a reprodução."
-      );
-    });
-
-
-    current = 0;
-
-    showScreen(cardsScreen);
-
-    renderCard();
+  if (music) {
+    try {
+      music.volume = 0.7;
+      await music.play();
+    } catch (error) {
+      console.log("Não foi possível tocar a música:", error);
+    }
   }
-);
+
+});
 
 
 nextBtn.addEventListener(
